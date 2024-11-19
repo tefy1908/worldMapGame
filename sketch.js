@@ -4,7 +4,7 @@ let modePopup, easyButton, normalButton, hardButton;
 let popupMessage;
 let popupTimeout;
 const pts = [];
-var size = 0.6;
+var size = 0.7;
 let startTime;  // Pour stocker l'heure de départ
 let gameOver = false; // Variable pour vérifier si le jeu est terminé
 let hintUsageCount = 0; // Compteur pour suivre le nombre d'utilisations de l'indice
@@ -444,7 +444,7 @@ function restartGame() {
   // Réinitialiser le timer et le jeu
   score = 0; // Réinitialiser le score
   hintUsageCount = 0;
-
+  penaltyTime = 0;
   startTime = millis();  // Réinitialiser le temps
   gameOver = false;  // Reprendre le jeu
   // desactiver le hint après le rédémarrage
