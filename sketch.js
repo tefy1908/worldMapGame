@@ -432,7 +432,7 @@ function selectMode(selectedMode) {
 function restartGame() {
   // Réinitialiser le timer et le jeu
   score = 0; // Réinitialiser le score
-  hintUsageCount;
+  hintUsageCount=0;
 
   startTime = millis();  // Réinitialiser le temps
   gameOver = false;  // Reprendre le jeu
