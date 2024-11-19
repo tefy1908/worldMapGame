@@ -28,13 +28,14 @@ let music; // Variable pour stocker la musique
 
 function preload() {
   startBgImg = loadImage("worldd.jpg");
-  music = loadSound('musique.mp3');
+  music = loadSound("musique.mp3");
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
   if (music.isLoaded()) {
     music.setVolume(1); // Définir le volume (valeur entre 0 et 1)
     music.loop(); // Faire en sorte que la musique joue en boucle
+    console.log("ici");
   }
   popupMessage = createDiv().style('background-color', '#fff')
     .style('padding', '10px')
