@@ -4,7 +4,7 @@ let modePopup, easyButton, normalButton, hardButton;
 let popupMessage;
 let popupTimeout;
 const pts = [];
-var size = 0.4;
+var size = 0.1;
 let startTime;  // Pour stocker l'heure de départ
 let gameOver = false; // Variable pour vérifier si le jeu est terminé
 
