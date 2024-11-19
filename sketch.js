@@ -7,7 +7,8 @@ const pts = [];
 var size = 0.6;
 let startTime;  // Pour stocker l'heure de départ
 let gameOver = false; // Variable pour vérifier si le jeu est terminé
-
+let hintUsageCount = 0; // Compteur pour suivre le nombre d'utilisations de l'indice
+const maxHints = 3; // Nombre maximum d'utilisations
 let popup;  // Variable pour stocker l'élément de la pop-up
 let restartButton; // Variable pour le bouton de redémarrage
 let targetCountry; // stocker le pays à deviner 
@@ -352,7 +353,14 @@ function showGameOverPopup() {
   changeModeButton.style('border-radius', '5px');
 }
 
+
 function activateHint() {
+    // Vérifier si l'utilisateur a déjà utilisé 3 fois l'indice
+    if (hintUsageCount >= maxHints) {
+      showTemporaryMessage("Vous avez utilisé tous vos indices !", 2000);
+      return; // Ne rien faire si l'utilisateur a déjà utilisé tous les indices
+    }
+  
     // Réinitialiser l'état précédent
     hintCountries = [];
     let hintType = random([0, 1]); // 0 pour l'affichage des pays, 1 pour l'ajout de temps
@@ -377,6 +385,9 @@ function activateHint() {
       startTime += 20000; // Ajouter 20 secondes
       showTemporaryMessage("+20 secondes ajoutées au timer !", 2000);
     }
+  
+    // Incrémenter le compteur d'utilisation de l'indice
+    hintUsageCount++;
   }
   
   // Fonction pour afficher un message temporaire
@@ -421,7 +432,7 @@ function selectMode(selectedMode) {
 function restartGame() {
   // Réinitialiser le timer et le jeu
   score = 0; // Réinitialiser le score
-
+  hintUsageCount;
 
   startTime = millis();  // Réinitialiser le temps
   gameOver = false;  // Reprendre le jeu
