@@ -4,7 +4,7 @@ let modePopup, easyButton, normalButton, hardButton;
 let popupMessage;
 let popupTimeout;
 const pts = [];
-var size = 0.7;
+var size = 0.75;
 let startTime;  // Pour stocker l'heure de départ
 let gameOver = false; // Variable pour vérifier si le jeu est terminé
 let hintUsageCount = 0; // Compteur pour suivre le nombre d'utilisations de l'indice
@@ -33,7 +33,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   if (music.isLoaded()) {
-    music.setVolume(1); // Définir le volume (valeur entre 0 et 1)
+    music.setVolume(0.5); // Définir le volume (valeur entre 0 et 1)
     music.loop(); // Faire en sorte que la musique joue en boucle
     console.log("ici");
   }
@@ -110,10 +110,10 @@ function setup() {
     }  
     
     } else if (mode === 'normal') {
-      maxScore = 20; // مقدار حداکثر امتیاز برای مود easy
+      maxScore = 10; // مقدار حداکثر امتیاز برای مود easy
       //console.log('Normal mode selected!');
     } else if (mode === 'hard') {
-      maxScore = 30; // مقدار حداکثر امتیاز برای مود easy
+      maxScore = 20; // مقدار حداکثر امتیاز برای مود easy
     }
     
     // ریست کردن بازی به حالت اولیه
@@ -123,6 +123,7 @@ function setup() {
     hintActive = false;
     startTime = millis();
     score = 0;
+    penaltyTime = 0;
   }
   // avoir un pays aléatoire 
   function selectRandomCountry() {
