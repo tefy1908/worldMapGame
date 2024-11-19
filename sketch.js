@@ -33,7 +33,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   if (music.isLoaded()) {
-    music.setVolume(0.5); // Définir le volume (valeur entre 0 et 1)
+    music.setVolume(1); // Définir le volume (valeur entre 0 et 1)
     music.loop(); // Faire en sorte que la musique joue en boucle
   }
   popupMessage = createDiv().style('background-color', '#fff')
