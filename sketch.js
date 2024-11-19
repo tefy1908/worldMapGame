@@ -1,5 +1,5 @@
-let modeSelected = false;  // حالت اولیه برای چک کردن اینکه مود انتخاب شده است یا خیر
-let mode;  // برای ذخیره مود انتخاب شده
+let modeSelected = false;  
+let mode;  
 let modePopup, easyButton, normalButton, hardButton;
 let popupMessage;
 let popupTimeout;
@@ -8,7 +8,7 @@ var size = 0.75;
 let startTime;  // Pour stocker l'heure de départ
 let gameOver = false; // Variable pour vérifier si le jeu est terminé
 let hintUsageCount = 0; // Compteur pour suivre le nombre d'utilisations de l'indice
-const maxHints = 100; // Nombre maximum d'utilisations du hint
+const maxHints = 5; // Nombre maximum d'utilisations du hint
 let popup;  // Variable pour stocker l'élément de la pop-up
 let restartButton; // Variable pour le bouton de redémarrage
 let targetCountry; // stocker le pays à deviner 
@@ -18,9 +18,9 @@ let hintButton; // Bouton pour HINT
 let hintCountries = []; // Liste des pays à mettre en évidence
 let hintActive = false; // Si l'indice est activé
 
-let startButton; // برای ذخیره دکمه "Start Game"
-let gameStarted = false; // وضعیت شروع بازی
-let startBgImg; // برای ذخیره تصویر بکگراند
+let startButton; // start game "
+let gameStarted = false; // 
+let startBgImg; // 
 let score = 0; // Score initial
 let maxScore=0;
 let penaltyTime = 0;  // Temps supplémentaire ou soustrait (en millisecondes)
@@ -60,9 +60,8 @@ function setup() {
     .style("border", "2px solid white")
     .style("z-index", "10");
 
-  startScreen.html("<h2 style='color: #FFFFFF;'>Welcome to the Game!</h2>"); // پیام خوش آمدگویی با رنگ سفید
-
-  startButton = createButton("Start Game").parent(startScreen);
+  startScreen.html("<h2 style='color: #FFFFFF;'>Bienvenue sur le jeu : Où suis-je !</h2>"); // 
+  startButton = createButton("Commencer le jeu ").parent(startScreen);
   startButton.style("border", "2px solid #FFC107");
   startButton.mousePressed(startGame);
   buttonMusic = createButton('🎵 Allumer la musique').parent(startScreen);
@@ -81,11 +80,11 @@ function setup() {
     .style('z-index', '10');
   modePopup.html('<p> CHOISIR LE MODE DU JEU </p>');
 
-  easyButton = createButton('Easy').parent(modePopup).style('margin', '5px');
+  easyButton = createButton('facile').parent(modePopup).style('margin', '5px');
   normalButton = createButton('Normal').parent(modePopup).style('margin', '5px');
-  hardButton = createButton('Hard').parent(modePopup).style('margin', '5px');
+  hardButton = createButton('Difficile').parent(modePopup).style('margin', '5px');
 
-  // عملکرد دکمه‌ها
+
 
   easyButton.mousePressed(() => selectMode('easy'));
   normalButton.mousePressed(() => selectMode('normal'));
@@ -93,19 +92,19 @@ function setup() {
 
 
   function startGame() {
-    gameStarted = true; // بازی شروع شد
-    startScreen.hide(); // مخفی کردن صفحه شروع
-    modePopup.show(); // نمایش پنجره انتخاب مود
+    gameStarted = true; // 
+    startScreen.hide(); //   
+    modePopup.show(); //    
   }
   modePopup.hide();
 
 
   function selectMode(selectedMode) {
-    mode = selectedMode;  // ذخیره مود انتخابی
-    modePopup.hide();  // مخفی کردن پنجره انتخاب مود
-    modeSelected = true;  // تغییر وضعیت به حالت مود انتخاب شده
-    startTime = millis();  // شروع مجدد تایمر
-    gameOver = false;  // اطمینان از اینکه بازی در حالت تمام شده نیست
+    mode = selectedMode;  //   
+    modePopup.hide();  //     
+    modeSelected = true;  //
+    startTime = millis();  // 
+    gameOver = false;  // 
     if (mode === 'easy') {
       maxScore = 1;
     if(score===maxScore){
@@ -113,13 +112,13 @@ function setup() {
     }  
     
     } else if (mode === 'normal') {
-      maxScore = 10; // مقدار حداکثر امتیاز برای مود easy
+      maxScore = 10; // 
       //console.log('Normal mode selected!');
     } else if (mode === 'hard') {
-      maxScore = 20; // مقدار حداکثر امتیاز برای مود easy
+      maxScore = 20; // 
     }
     
-    // ریست کردن بازی به حالت اولیه
+    //    
     //resetGame();
     selectRandomCountry();
     hintCountries = []; // Liste des pays à mettre en évidence
@@ -151,7 +150,7 @@ function setup() {
 
   // Créer un conteneur pour la pop-up et le bouton "Rejouer"
   popup = createDiv();
-  popup.hide();  // Cacher la pop-up par défaut
+  popup.hide(); 
 
 
 }
@@ -163,7 +162,7 @@ function draw() {
   //}
   if (!gameStarted) {
     background(startBgImg);
-    return; // وقتی بازی شروع نشده باشد، نمایش نمی‌دهیم
+    return; // afficher que la page d'accueil si le jeu n a pas encore commencer 
   }
   if (!modeSelected) {
     return; // Attendre que l'utilisateur sélectionne un mode
@@ -175,16 +174,16 @@ function draw() {
   textSize(20);
   fill(255);
   textAlign(LEFT, TOP); // Alignement en haut à gauche
-  text('Mode: ' + mode, width * 0.01, height * 0.01); // Position proportionnelle
+  text('Mode: ' + mode, width * 0.01, height * 0.01);
 
   // Afficher le pays à trouver en haut de l'écran
   textSize(24);
-  textAlign(CENTER, BOTTOM); // Centré horizontalement et aligné en bas
+  textAlign(CENTER, BOTTOM); 
   fill(255, 204, 0);
-  text(""+ targetCountry.name, width / 2, height- 20); // Positionner au milieu en bas, avec un décalage de 20 pixels du bas
+  text(""+ targetCountry.name, width / 2, height- 20); // Positionner au milieu en bas
   // Créer le bouton HINT
   hintButton = createButton('HINT');
-  hintButton.position(width - 100, 10); // Positionner en haut à droite
+  hintButton.position(width - 100, 10); // permet de positionner en haut à droie 
   hintButton.style('padding', '10px 20px');
   hintButton.style('font-size', '16px');
   hintButton.style('background-color', '#ffcc00');
@@ -266,29 +265,29 @@ function draw() {
 
   // Si le jeu est toujours en cours, afficher le timer
   if (!gameOver) {
-    let seconds = int(elapsedTime % 60);  // Extraire les secondes
-    let minutes = int(elapsedTime / 60);  // Extraire les minutes
+    let seconds = int(elapsedTime % 60); 
+    let minutes = int(elapsedTime / 60);  
 
     // Afficher le timer en bas à gauche
     textSize(32);
     fill(255);  // Couleur du texte (blanc)
     textAlign(LEFT, BOTTOM); // Aligner le texte à gauche et en bas
-    text("Timer: " + nf(minutes, 2) + ":" + nf(seconds, 2), 20, height - 20); // Positionner à 20px du bord gauche et 20px du bas
+    text("Timer: " + nf(minutes, 2) + ":" + nf(seconds, 2), 20, height - 20); 
   }
 }
 
 
 function toggleMusic() {
     if (!isPlayingMusic) {
-      // Si la musique joue, on la coupe
-      music.pause(); // Utilisez `pause()` pour mettre en pause
+      
+      music.pause(); // mettre en payse la musqiue 
       buttonMusic.html('🎵 Allumer la musique'); // Changer le texte du bouton
     } else {
       // Si la musique ne joue pas, on la démarre
       if (!music.isPlaying()) { 
         music.loop(); // Lecture en boucle
       }
-      buttonMusic.html('🔇 Couper la musique'); // Changer le texte du bouton
+      buttonMusic.html('🔇 Couper la musique'); 
     }
     isPlayingMusic = !isPlayingMusic; // Inverser l'état
   }
@@ -309,7 +308,7 @@ function mousePressed() {
 
   if (guessedCountry) {
     if (guessedCountry.name !== targetCountry.name) {
-      // اگر اشتباه حدس زده شود
+      
       wrongGuesses++;
       penaltyTime += 1000;  // Ajouter une seconde
       showMessage = '-1: ' + guessedCountry.name;
@@ -319,7 +318,7 @@ function mousePressed() {
         setTimeout(() => popupMessage.hide(), 1000);
       }, 0);
     } else {
-      // اگر درست حدس زده شود
+      
       showMessage = '+1: ' + guessedCountry.name;
       setTimeout(() => {
         showPopup(showMessage);
@@ -327,13 +326,13 @@ function mousePressed() {
       }, 0);
         startTime = millis(); // Redémarrer le timer  lorque l'utilisateur trouve un pays 
 
-      // اضافه کردن یک ثانیه به زمان
+      
       score++; // Augmenter le score
       penaltyTime -= 1000;  // enlever une seconde car l'utilisateur à trouver le pays 
-      selectRandomCountry();  // انتخاب کشور جدید
+      selectRandomCountry();  
       if (score === maxScore) {
-        gameOver = true;  // بازی تمام شده
-        showGameOverPopup();  // نمایش پیام برنده شدن
+        gameOver = true;   
+        showGameOverPopup();  
         
       }
     }
@@ -356,9 +355,9 @@ function showPopup(message) {
 
 // Fonction pour afficher le message de fin du jeu
 function showGameOverPopup() {
-  let message = "Vous avez perdu"; // پیام پیش‌فرض
+  let message = "Vous avez perdu"; 
   if (score === maxScore) {
-    message = "Vous avez gagné"; // پیام برنده
+    message = "Vous avez gagné"; 
   }
   // position pop up
   let popupWidth = 300;  // Largeur de la pop-up
@@ -390,7 +389,7 @@ function showGameOverPopup() {
   restartButton.parent(buttonContainer);
   restartButton.mousePressed(restartGame);  // Lorsqu'on clique, on redémarre le jeu
 
-  // Appliquer du style au bouton pour le rendre plus visible
+  // Appliquer du style au bouton
   restartButton.style('background-color', '#4CAF50');
   restartButton.style('color', 'white');
   restartButton.style('padding', '10px 20px');
@@ -400,9 +399,9 @@ function showGameOverPopup() {
   let changeModeButton = createButton('Changer de mode');
   changeModeButton.parent(buttonContainer);
   changeModeButton.mousePressed(() => {
-    popup.hide();  // پنهان کردن پاپ‌آپ
-    modeSelected = false;  // تنظیم مود به حالت انتخاب نشده
-    modePopup.show();  // نمایش صفحه انتخاب مود
+    popup.hide();  
+    modeSelected = false;  
+    modePopup.show();  
   });
   changeModeButton.style('background-color', '#FF5733');
   changeModeButton.style('color', 'white');
