@@ -120,6 +120,8 @@ function setup() {
     selectRandomCountry();
     hintCountries = []; // Liste des pays à mettre en évidence
     hintActive = false;
+    startTime = millis();
+    score = 0;
   }
   // avoir un pays aléatoire 
   function selectRandomCountry() {
