@@ -140,7 +140,8 @@ function draw() {
   background(0);
   textSize(20);
   fill(255);
-  text('Mode: ' + mode, 20, 40);
+  textAlign(LEFT, TOP); // Alignement en haut à gauche
+  text('Mode: ' + mode, width * 0.01, height * 0.01); // Position proportionnelle
 
   // Afficher le pays à trouver en haut de l'écran
   textSize(24);
