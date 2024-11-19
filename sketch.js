@@ -25,6 +25,8 @@ let score = 0; // Score initial
 let maxScore=0;
 let penaltyTime = 0;  // Temps supplémentaire ou soustrait (en millisecondes)
 let music; // Variable pour stocker la musique
+let buttonMusic;
+let isPlayingMusic = false;
 
 function preload() {
   startBgImg = loadImage("worldd.jpg");
@@ -32,11 +34,9 @@ function preload() {
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  if (music.isLoaded()) {
-    music.setVolume(0.5); // Définir le volume (valeur entre 0 et 1)
-    music.loop(); // Faire en sorte que la musique joue en boucle
-    console.log("ici");
-  }
+  
+    // Créer un bouton pour contrôler la musique
+  
   popupMessage = createDiv().style('background-color', '#fff')
     .style('padding', '10px')
     .style('border-radius', '10px')
@@ -65,6 +65,9 @@ function setup() {
   startButton = createButton("Start Game").parent(startScreen);
   startButton.style("border", "2px solid #FFC107");
   startButton.mousePressed(startGame);
+  buttonMusic = createButton('🎵 Allumer la musique').parent(startScreen);
+  buttonMusic.style("border", "2px solid #FFC107");
+  buttonMusic.mousePressed(toggleMusic); // Associer l'action au clic du bouton
 
   modePopup = createDiv().style('background-color', '#fff')
     .style('padding', '20px')
@@ -155,9 +158,9 @@ function setup() {
 
 function draw() {
       // Si la musique n'est pas en train de jouer, vous pouvez la lancer
-  if (!music.isPlaying()) {
-    music.play();
-  }
+  //if (!music.isPlaying()) {
+    //music.play();
+  //}
   if (!gameStarted) {
     background(startBgImg);
     return; // وقتی بازی شروع نشده باشد، نمایش نمی‌دهیم
@@ -165,6 +168,7 @@ function draw() {
   if (!modeSelected) {
     return; // Attendre que l'utilisateur sélectionne un mode
   }
+  
 
   // Nettoyage de l'écran et affichage du mode actuel
   background(0,105,148);
@@ -274,8 +278,23 @@ function draw() {
 }
 
 
+function toggleMusic() {
+    if (!isPlayingMusic) {
+      // Si la musique joue, on la coupe
+      music.pause(); // Utilisez `pause()` pour mettre en pause
+      buttonMusic.html('🎵 Allumer la musique'); // Changer le texte du bouton
+    } else {
+      // Si la musique ne joue pas, on la démarre
+      if (!music.isPlaying()) { 
+        music.loop(); // Lecture en boucle
+      }
+      buttonMusic.html('🔇 Couper la musique'); // Changer le texte du bouton
+    }
+    isPlayingMusic = !isPlayingMusic; // Inverser l'état
+  }
+
 function mousePressed() {
-  if (gameOver) {
+  if (!gameStarted || !modeSelected || gameOver) {
     return;
   }
 
