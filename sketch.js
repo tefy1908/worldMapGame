@@ -353,22 +353,53 @@ function showGameOverPopup() {
 }
 
 function activateHint() {
-  // Réinitialiser l'état précédent
-  hintCountries = [];
-
-  // Ajouter le pays cible
-  hintCountries.push(targetCountry);
-
-  // Ajouter deux autres pays aléatoires
-  while (hintCountries.length < 3) {
-    let randomCountry = random(country);
-    if (!hintCountries.includes(randomCountry)) {
-      hintCountries.push(randomCountry);
+    // Réinitialiser l'état précédent
+    hintCountries = [];
+    let hintType = random([0, 1]); // 0 pour l'affichage des pays, 1 pour l'ajout de temps
+  
+    if (hintType === 0) {
+      // Option 1: Ajouter trois pays, y compris le pays cible
+      hintCountries.push(targetCountry);
+  
+      while (hintCountries.length < 3) {
+        let randomCountry = random(country);
+        if (!hintCountries.includes(randomCountry)) {
+          hintCountries.push(randomCountry);
+        }
+      }
+  
+      hintActive = true; // Activer l'indice
+      // Informer l'utilisateur du type d'indice
+      showTemporaryMessage("3 pays sont mis en évidence !", 2000);
+  
+    } else if (hintType === 1) {
+      // Option 2: Ajouter du temps au chronomètre
+      startTime -= 20000; // Ajouter 20 secondes
+      showTemporaryMessage("+20 secondes ajoutées au timer !", 2000);
     }
   }
-
-  hintActive = true; // Activer l'indice
-}
+  
+  // Fonction pour afficher un message temporaire
+  function showTemporaryMessage(message, duration) {
+    let hintMessage = createDiv(message)
+      .style('background-color', 'rgba(0, 0, 0, 0.7)')
+      .style('color', 'white')
+      .style('padding', '10px 20px')
+      .style('border-radius', '5px')
+      .style('position', 'absolute')
+      .style('top', '50%')
+      .style('left', '50%')
+      .style('transform', 'translate(-50%, -50%)')
+      .style('font-size', '20px')
+      .style('text-align', 'center')
+      .style('z-index', '10');
+  
+    setTimeout(() => {
+      hintMessage.remove(); // Supprimer le message après la durée spécifiée
+    }, duration);
+  }
+  
+  
 
 // عملکرد انتخاب مود
 function selectMode(selectedMode) {
