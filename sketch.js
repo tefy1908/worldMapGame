@@ -146,7 +146,7 @@ function draw() {
   textSize(24);
   textAlign(CENTER, BOTTOM); // Centré horizontalement et aligné en bas
   fill(255, 204, 0);
-  text(" " + targetCountry.name, 400, 500);
+  text(""+ targetCountry.name, width / 2, height - 20); // Positionner au milieu en bas, avec un décalage de 20 pixels du bas
   // Créer le bouton HINT
   hintButton = createButton('HINT');
   hintButton.position(width - 100, 10); // Positionner en haut à droite
