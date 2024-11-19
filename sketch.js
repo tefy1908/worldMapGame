@@ -23,6 +23,8 @@ let gameStarted = false; // وضعیت شروع بازی
 let startBgImg; // برای ذخیره تصویر بکگراند
 let score = 0; // Score initial
 let maxScore=0;
+let penaltyTime = 0;  // Temps supplémentaire ou soustrait (en millisecondes)
+
 function preload() {
   startBgImg = loadImage("worldd.jpg"); // مسیر تصویر بکگراند
 }
@@ -234,8 +236,8 @@ function draw() {
   }
 
   // Calculer le temps écoulé en secondes
-  let elapsedTime = (millis() - startTime) / 1000;  // Convertir en secondes
-  if (elapsedTime >= 20) {
+  let elapsedTime = ((millis() - startTime) + penaltyTime) / 1000;  // Convertir en secondes
+  if (elapsedTime >= 60) {
     gameOver = true; // Fin du jeu
     showGameOverPopup(); // Afficher la fenêtre pop-up
   }
@@ -272,7 +274,7 @@ function mousePressed() {
     if (guessedCountry.name !== targetCountry.name) {
       // اگر اشتباه حدس زده شود
       wrongGuesses++;
-      startTime -= 1000;  // کاهش زمان
+      penaltyTime -= 1000;  // Retirer 1 seconde
       showMessage = '-1: ' + guessedCountry.name;
 
       setTimeout(() => {
@@ -289,7 +291,7 @@ function mousePressed() {
 
       // اضافه کردن یک ثانیه به زمان
       score++; // Augmenter le score
-      startTime += 1000;  // اضافه کردن 1 ثانیه
+      penaltyTime += 1000;  // Ajouter 1 seconde
       selectRandomCountry();  // انتخاب کشور جدید
     }
   }
@@ -391,8 +393,8 @@ function activateHint() {
   
     } else if (hintType === 1) {
       // Option 2: Ajouter du temps au chronomètre
-      startTime += 20000; // Ajouter 20 secondes
-      showTemporaryMessage("+20 secondes ajoutées au timer !", 2000);
+      penaltyTime -= 20000;  // Ajouter 20 secondes
+      showTemporaryMessage("20 secondes ont été retirés du timer ! Profitez-en !", 2000);
     }
   
     // Incrémenter le compteur d'utilisation de l'indice
@@ -441,6 +443,7 @@ function selectMode(selectedMode) {
 function restartGame() {
   // Réinitialiser le timer et le jeu
   score = 0; // Réinitialiser le score
+  hintUsageCount = 0;
 
   startTime = millis();  // Réinitialiser le temps
   gameOver = false;  // Reprendre le jeu
