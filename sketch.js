@@ -24,12 +24,20 @@ let startBgImg; // برای ذخیره تصویر بکگراند
 let score = 0; // Score initial
 let maxScore=0;
 let penaltyTime = 0;  // Temps supplémentaire ou soustrait (en millisecondes)
+let music; // Variable pour stocker la musique
 
 function preload() {
-  startBgImg = loadImage("worldd.jpg"); // مسیر تصویر بکگراند
+  startBgImg = loadImage("worldd.jpg");
+  music = loadSound('musique.mp3');
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
+    // Chargement de la musique 
+    if (music.isLoaded()) {
+        music.setVolume(0.5); // Définir le volume (valeur entre 0 et 1)
+        music.loop(); // Faire en sorte que la musique joue en boucle
+      }
+    }
   popupMessage = createDiv().style('background-color', '#fff')
     .style('padding', '10px')
     .style('border-radius', '10px')
@@ -140,6 +148,10 @@ function setup() {
 }
 
 function draw() {
+      // Si la musique n'est pas en train de jouer, vous pouvez la lancer
+  if (!music.isPlaying()) {
+    music.play();
+  }
   if (!gameStarted) {
     background(startBgImg);
     return; // وقتی بازی شروع نشده باشد، نمایش نمی‌دهیم
@@ -382,14 +394,14 @@ function activateHint() {
   
     if (hintType === 0) {
       // Option 1: Ajouter trois pays, y compris le pays cible
-      hintCountries.push(targetCountry);
-      hintCountries = [targetCountry]; // Always include targetCountry in the hint list
-
+      hintCountries.push(targetCountry);  // S'assurer que le pays cible est toujours inclus
   
+      // Ajouter des pays aléatoires jusqu'à atteindre 3 pays
       while (hintCountries.length < 3) {
-        let randomCountry = random(country);
+        let randomCountry = random(country);  // Sélectionner un pays au hasard
+        // Vérifier que le pays sélectionné n'est pas déjà dans la liste des pays à indiquer
         if (!hintCountries.includes(randomCountry)) {
-          hintCountries.push(randomCountry);
+          hintCountries.push(randomCountry); // Ajouter le pays si ce n'est pas déjà dans la liste
         }
       }
   
@@ -406,6 +418,7 @@ function activateHint() {
     // Incrémenter le compteur d'utilisation de l'indice
     hintUsageCount++;
   }
+  
   
   // Fonction pour afficher un message temporaire
   function showTemporaryMessage(message, duration) {
