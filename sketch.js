@@ -4,7 +4,7 @@ let modePopup, easyButton, normalButton, hardButton;
 let popupMessage;
 let popupTimeout;
 const pts = [];
-var size = 0.6;
+var size = 0.9;
 let startTime;  // Pour stocker l'heure de départ
 let gameOver = false; // Variable pour vérifier si le jeu est terminé
 
@@ -25,7 +25,7 @@ function preload() {
   startBgImg = loadImage("worldd.jpg"); // مسیر تصویر بکگراند
 }
 function setup() {
-  createCanvas(1200, 800);
+  createCanvas(1600, 1200);
   popupMessage = createDiv().style('background-color', '#fff')
     .style('padding', '10px')
     .style('border-radius', '10px')
