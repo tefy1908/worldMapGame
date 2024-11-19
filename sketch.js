@@ -397,6 +397,9 @@ function restartGame() {
     country[i].color = color(random(180, 255), random(180, 255), random(50, 100)); // Couleur aléatoire un peu clair 
   }
 }
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+  }
 
 
 // Convertir le chemin des polygones en un tableau de polygones
