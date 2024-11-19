@@ -138,7 +138,7 @@ function draw() {
   }
 
   // Nettoyage de l'écran et affichage du mode actuel
-  background(0);
+  background(0,105,148);
   textSize(20);
   fill(255);
   textAlign(LEFT, TOP); // Alignement en haut à gauche
@@ -148,7 +148,7 @@ function draw() {
   textSize(24);
   textAlign(CENTER, BOTTOM); // Centré horizontalement et aligné en bas
   fill(255, 204, 0);
-  text(""+ targetCountry.name, width / 2, height - 20); // Positionner au milieu en bas, avec un décalage de 20 pixels du bas
+  text(""+ targetCountry.name, width / 2, height- 20); // Positionner au milieu en bas, avec un décalage de 20 pixels du bas
   // Créer le bouton HINT
   hintButton = createButton('HINT');
   hintButton.position(width - 100, 10); // Positionner en haut à droite
@@ -225,7 +225,7 @@ function draw() {
 
   // Calculer le temps écoulé en secondes
   let elapsedTime = (millis() - startTime) / 1000;  // Convertir en secondes
-  if (elapsedTime >= 5) {
+  if (elapsedTime >= 20) {
     gameOver = true; // Fin du jeu
     showGameOverPopup(); // Afficher la fenêtre pop-up
   }
