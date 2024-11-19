@@ -8,7 +8,7 @@ var size = 0.7;
 let startTime;  // Pour stocker l'heure de départ
 let gameOver = false; // Variable pour vérifier si le jeu est terminé
 let hintUsageCount = 0; // Compteur pour suivre le nombre d'utilisations de l'indice
-const maxHints = 3; // Nombre maximum d'utilisations
+const maxHints = 5; // Nombre maximum d'utilisations du hint
 let popup;  // Variable pour stocker l'élément de la pop-up
 let restartButton; // Variable pour le bouton de redémarrage
 let targetCountry; // stocker le pays à deviner 
@@ -274,7 +274,7 @@ function mousePressed() {
     if (guessedCountry.name !== targetCountry.name) {
       // اگر اشتباه حدس زده شود
       wrongGuesses++;
-      penaltyTime -= 1000;  // Retirer 1 seconde
+      penaltyTime += 1000;  // Ajouter une seconde
       showMessage = '-1: ' + guessedCountry.name;
 
       setTimeout(() => {
@@ -288,10 +288,11 @@ function mousePressed() {
         showPopup(showMessage);
         setTimeout(() => popupMessage.hide(), 1000);
       }, 0);
+      startTime = millis(); // Redémarrer le timer
 
       // اضافه کردن یک ثانیه به زمان
       score++; // Augmenter le score
-      penaltyTime += 1000;  // Ajouter 1 seconde
+      penaltyTime -= 1000;  // enlever une seconde car l'utilisateur à trouver le pays 
       selectRandomCountry();  // انتخاب کشور جدید
     }
   }
