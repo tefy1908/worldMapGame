@@ -20,6 +20,7 @@ let hintActive = false; // Si l'indice est activé
 let startButton; // برای ذخیره دکمه "Start Game"
 let gameStarted = false; // وضعیت شروع بازی
 let startBgImg; // برای ذخیره تصویر بکگراند
+let score = 0; // Score initial
 
 function preload() {
   startBgImg = loadImage("worldd.jpg"); // مسیر تصویر بکگراند
@@ -157,6 +158,12 @@ function draw() {
   hintButton.style('border-radius', '5px');
   hintButton.style('color', '#000');
   hintButton.mousePressed(activateHint); // Activer l'indice au clic
+  // Afficher le score en bas à droite
+  textSize(height * 0.03); // Taille proportionnelle à la hauteur
+  fill(255); // Couleur blanche
+  textAlign(RIGHT, BOTTOM); // Alignement à droite et en bas
+  text('Score: ' + score, width - width * 0.01, height - height * 0.01); // Position proportionnelle
+
 
 
   // Si le jeu est terminé, afficher la pop-up, mais continuer à dessiner
