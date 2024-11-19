@@ -374,7 +374,7 @@ function activateHint() {
   
     } else if (hintType === 1) {
       // Option 2: Ajouter du temps au chronomètre
-      startTime -= 20000; // Ajouter 20 secondes
+      startTime += 20000; // Ajouter 20 secondes
       showTemporaryMessage("+20 secondes ajoutées au timer !", 2000);
     }
   }
@@ -398,6 +398,7 @@ function activateHint() {
       hintMessage.remove(); // Supprimer le message après la durée spécifiée
     }, duration);
   }
+  
   
   
 
