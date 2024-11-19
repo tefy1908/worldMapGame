@@ -278,6 +278,7 @@ function mousePressed() {
       }, 0);
 
       // اضافه کردن یک ثانیه به زمان
+      score++; // Augmenter le score
       startTime += 1000;  // اضافه کردن 1 ثانیه
       selectRandomCountry();  // انتخاب کشور جدید
     }
@@ -387,6 +388,8 @@ function selectMode(selectedMode) {
 // Fonction pour redémarrer le jeu
 function restartGame() {
   // Réinitialiser le timer et le jeu
+  score = 0; // Réinitialiser le score
+
 
   startTime = millis();  // Réinitialiser le temps
   gameOver = false;  // Reprendre le jeu
