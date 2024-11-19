@@ -4,7 +4,7 @@ let modePopup, easyButton, normalButton, hardButton;
 let popupMessage;
 let popupTimeout;
 const pts = [];
-var size = 0.3;
+var size = 0.4;
 let startTime;  // Pour stocker l'heure de départ
 let gameOver = false; // Variable pour vérifier si le jeu est terminé
 
@@ -25,19 +25,19 @@ function preload() {
   startBgImg = loadImage("worldd.jpg"); // مسیر تصویر بکگراند
 }
 function setup() {
-  createCanvas(600, 400);
+  createCanvas(800, 500);
   popupMessage = createDiv().style('background-color', '#fff')
-  .style('padding', '10px')
-  .style('border-radius', '10px')
-  .style('text-align', 'center')
-  .style('width', '200px')
-  .style('position', 'absolute')
-  .style('top', '50%')
-  .style('left', '50%')
-  .style('transform', 'translate(-50%, -50%)')
-  .style('z-index', '10')
-  .hide();
-    let startScreen = createDiv()
+    .style('padding', '10px')
+    .style('border-radius', '10px')
+    .style('text-align', 'center')
+    .style('width', '200px')
+    .style('position', 'absolute')
+    .style('top', '50%')
+    .style('left', '50%')
+    .style('transform', 'translate(-50%, -50%)')
+    .style('z-index', '10')
+    .hide();
+  let startScreen = createDiv()
     .style("background-color", "#FFC10763")
     .style("padding", "20px")
     .style("text-align", "center")
@@ -49,12 +49,12 @@ function setup() {
     .style("border", "2px solid white")
     .style("z-index", "10");
 
-    startScreen.html("<h2 style='color: #FFFFFF;'>Welcome to the Game!</h2>"); // پیام خوش آمدگویی با رنگ سفید
+  startScreen.html("<h2 style='color: #FFFFFF;'>Welcome to the Game!</h2>"); // پیام خوش آمدگویی با رنگ سفید
 
   startButton = createButton("Start Game").parent(startScreen);
   startButton.style("border", "2px solid #FFC107");
   startButton.mousePressed(startGame);
-  
+
   modePopup = createDiv().style('background-color', '#fff')
     .style('padding', '20px')
     .style('border-radius', '10px')
@@ -76,7 +76,7 @@ function setup() {
   easyButton.mousePressed(() => selectMode('easy'));
   normalButton.mousePressed(() => selectMode('normal'));
   hardButton.mousePressed(() => selectMode('hard'));
-  
+
 
   function startGame() {
     gameStarted = true; // بازی شروع شد
@@ -146,8 +146,8 @@ function draw() {
   textSize(24);
   textAlign(CENTER, BOTTOM); // Centré horizontalement et aligné en bas
   fill(255, 204, 0);
-  text("Trouvez le pays : " + targetCountry.name, 400, 500);
-      // Créer le bouton HINT
+  text(" " + targetCountry.name, 400, 500);
+  // Créer le bouton HINT
   hintButton = createButton('HINT');
   hintButton.position(width - 100, 10); // Positionner en haut à droite
   hintButton.style('padding', '10px 20px');
@@ -156,8 +156,8 @@ function draw() {
   hintButton.style('border-radius', '5px');
   hintButton.style('color', '#000');
   hintButton.mousePressed(activateHint); // Activer l'indice au clic
-  
-  
+
+
   // Si le jeu est terminé, afficher la pop-up, mais continuer à dessiner
   if (gameOver) {
     popup.show(); // Afficher la pop-up avec le bouton "Rejouer"
@@ -237,56 +237,56 @@ function draw() {
 
 
 function mousePressed() {
-    if (gameOver) {
-      return;
-    }
+  if (gameOver) {
+    return;
+  }
 
-    let guessedCountry = null;
+  let guessedCountry = null;
 
-    for (var i = 0; i < country.length; i++) {
-      if (country[i].polygons.some(poly => pointInPoly(poly, createVector(mouseX, mouseY)))) {
-        guessedCountry = country[i];
-        break;
-      }
-    }
-
-    if (guessedCountry) {
-      if (guessedCountry.name !== targetCountry.name) {
-        // اگر اشتباه حدس زده شود
-        wrongGuesses++;
-        startTime -= 1000;  // کاهش زمان
-        showMessage = '-1: ' + guessedCountry.name;
-
-        setTimeout(() => {
-          showPopup(showMessage);
-          setTimeout(() => popupMessage.hide(), 1000);
-        }, 0);
-      } else {
-        // اگر درست حدس زده شود
-        showMessage = '+1: ' + guessedCountry.name;
-        setTimeout(() => {
-          showPopup(showMessage);
-          setTimeout(() => popupMessage.hide(), 1000);
-        }, 0);
-
-        // اضافه کردن یک ثانیه به زمان
-        startTime += 1000;  // اضافه کردن 1 ثانیه
-        selectRandomCountry();  // انتخاب کشور جدید
-      }
+  for (var i = 0; i < country.length; i++) {
+    if (country[i].polygons.some(poly => pointInPoly(poly, createVector(mouseX, mouseY)))) {
+      guessedCountry = country[i];
+      break;
     }
   }
 
-  function showPopup(message) {
-    popupMessage.html('<p>' + message + '</p>');
-    popupMessage.style('background-color', 'transparent');
+  if (guessedCountry) {
+    if (guessedCountry.name !== targetCountry.name) {
+      // اگر اشتباه حدس زده شود
+      wrongGuesses++;
+      startTime -= 1000;  // کاهش زمان
+      showMessage = '-1: ' + guessedCountry.name;
 
-    if (message.includes('-1')) {
-      popupMessage.style('color', 'red');
+      setTimeout(() => {
+        showPopup(showMessage);
+        setTimeout(() => popupMessage.hide(), 1000);
+      }, 0);
     } else {
-      popupMessage.style('color', 'white');
+      // اگر درست حدس زده شود
+      showMessage = '+1: ' + guessedCountry.name;
+      setTimeout(() => {
+        showPopup(showMessage);
+        setTimeout(() => popupMessage.hide(), 1000);
+      }, 0);
+
+      // اضافه کردن یک ثانیه به زمان
+      startTime += 1000;  // اضافه کردن 1 ثانیه
+      selectRandomCountry();  // انتخاب کشور جدید
     }
-    popupMessage.show();
   }
+}
+
+function showPopup(message) {
+  popupMessage.html('<p>' + message + '</p>');
+  popupMessage.style('background-color', 'transparent');
+
+  if (message.includes('-1')) {
+    popupMessage.style('color', 'red');
+  } else {
+    popupMessage.style('color', 'white');
+  }
+  popupMessage.show();
+}
 
 
 
@@ -309,17 +309,17 @@ function showGameOverPopup() {
   popup.style('width', popupWidth + 'px');  // Largeur précise
   popup.style('height', popupHeight + 'px');  // Hauteur précise
   popup.html('<p>Vous avez perdu ! </p>'); // Message "Vous avez perdu"
-    // Style de conteneur pour les boutons
-  let buttonContainer = createDiv(); 
-  buttonContainer.parent(popup); 
+  // Style de conteneur pour les boutons
+  let buttonContainer = createDiv();
+  buttonContainer.parent(popup);
   buttonContainer.style('display', 'flex');
   buttonContainer.style('justify-content', 'center');
   buttonContainer.style('gap', '20px');  // Ajout d'un espacement entre les boutons
   buttonContainer.style('margin-top', '20px'); // Espacement par rapport au texte
-  
+
   // Créer le bouton "Rejouer"
   restartButton = createButton('Rejouer');
-    restartButton.parent(buttonContainer);
+  restartButton.parent(buttonContainer);
   restartButton.mousePressed(restartGame);  // Lorsqu'on clique, on redémarre le jeu
 
   // Appliquer du style au bouton pour le rendre plus visible
@@ -328,7 +328,7 @@ function showGameOverPopup() {
   restartButton.style('padding', '10px 20px');
   restartButton.style('font-size', '20px');
   restartButton.style('border-radius', '5px');
-  
+
   let changeModeButton = createButton('Changer de mode');
   changeModeButton.parent(buttonContainer);
   changeModeButton.mousePressed(() => {
@@ -343,7 +343,7 @@ function showGameOverPopup() {
   changeModeButton.style('border-radius', '5px');
 }
 
-  function activateHint() {
+function activateHint() {
   // Réinitialiser l'état précédent
   hintCountries = [];
 
@@ -379,15 +379,15 @@ function selectMode(selectedMode) {
 // Fonction pour redémarrer le jeu
 function restartGame() {
   // Réinitialiser le timer et le jeu
-  
+
   startTime = millis();  // Réinitialiser le temps
   gameOver = false;  // Reprendre le jeu
   // desactiver le hint après le rédémarrage
   hintActive = false;
-    hintCountries = []; // Réinitialiser la liste des pays pour le Hint
+  hintCountries = []; // Réinitialiser la liste des pays pour le Hint
   selectRandomCountry(); // Choisir un nouveau pays aléatoire
 
- 
+
 
   // Cacher la pop-up et recommencer
   popup.hide();
