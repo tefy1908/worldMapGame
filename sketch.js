@@ -288,12 +288,15 @@ function mousePressed() {
         showPopup(showMessage);
         setTimeout(() => popupMessage.hide(), 1000);
       }, 0);
-      startTime = millis(); // Redémarrer le timer
+        startTime = millis(); // Redémarrer le timer  lorque l'utilisateur trouve un pays 
 
       // اضافه کردن یک ثانیه به زمان
       score++; // Augmenter le score
       penaltyTime -= 1000;  // enlever une seconde car l'utilisateur à trouver le pays 
       selectRandomCountry();  // انتخاب کشور جدید
+            // Désactiver l'indice et effacer la liste des pays mis en évidence
+      hintActive = false;
+      hintCountries = [];
     }
   }
 }
@@ -380,6 +383,8 @@ function activateHint() {
     if (hintType === 0) {
       // Option 1: Ajouter trois pays, y compris le pays cible
       hintCountries.push(targetCountry);
+      hintCountries = [targetCountry]; // Always include targetCountry in the hint list
+
   
       while (hintCountries.length < 3) {
         let randomCountry = random(country);
