@@ -4,7 +4,7 @@ let modePopup, easyButton, normalButton, hardButton;
 let popupMessage;
 let popupTimeout;
 const pts = [];
-var size = 0.1;
+var size = 0.6;
 let startTime;  // Pour stocker l'heure de départ
 let gameOver = false; // Variable pour vérifier si le jeu est terminé
 
@@ -20,7 +20,8 @@ let hintActive = false; // Si l'indice est activé
 let startButton; // برای ذخیره دکمه "Start Game"
 let gameStarted = false; // وضعیت شروع بازی
 let startBgImg; // برای ذخیره تصویر بکگراند
-
+let score = 0; // Score initial
+let maxScore=0;
 function preload() {
   startBgImg = loadImage("worldd.jpg"); // مسیر تصویر بکگراند
 }
@@ -92,7 +93,15 @@ function setup() {
     modeSelected = true;  // تغییر وضعیت به حالت مود انتخاب شده
     startTime = millis();  // شروع مجدد تایمر
     gameOver = false;  // اطمینان از اینکه بازی در حالت تمام شده نیست
-
+    if (mode === 'easy') {
+      // کارهایی که برای مود آسان می‌خواهید انجام دهید
+      maxScore = 10; // مقدار حداکثر امتیاز برای مود easy
+    } else if (mode === 'normal') {
+      maxScore = 20; // مقدار حداکثر امتیاز برای مود easy
+      //console.log('Normal mode selected!');
+    } else if (mode === 'hard') {
+      maxScore = 30; // مقدار حداکثر امتیاز برای مود easy
+    }
     // ریست کردن بازی به حالت اولیه
     //resetGame();
     selectRandomCountry();
@@ -137,16 +146,17 @@ function draw() {
   }
 
   // Nettoyage de l'écran et affichage du mode actuel
-  background(0);
+  background(0,105,148);
   textSize(20);
   fill(255);
-  text('Mode: ' + mode, 20, 40);
+  textAlign(LEFT, TOP); // Alignement en haut à gauche
+  text('Mode: ' + mode, width * 0.01, height * 0.01); // Position proportionnelle
 
   // Afficher le pays à trouver en haut de l'écran
   textSize(24);
   textAlign(CENTER, BOTTOM); // Centré horizontalement et aligné en bas
   fill(255, 204, 0);
-  text(" " + targetCountry.name, 400, 500);
+  text(""+ targetCountry.name, width / 2, height- 20); // Positionner au milieu en bas, avec un décalage de 20 pixels du bas
   // Créer le bouton HINT
   hintButton = createButton('HINT');
   hintButton.position(width - 100, 10); // Positionner en haut à droite
@@ -156,6 +166,13 @@ function draw() {
   hintButton.style('border-radius', '5px');
   hintButton.style('color', '#000');
   hintButton.mousePressed(activateHint); // Activer l'indice au clic
+  // Afficher le score en bas à droite
+  textSize(height * 0.03); // Taille proportionnelle à la hauteur
+  fill(255); // Couleur blanche
+  textAlign(RIGHT, BOTTOM); // Alignement à droite et en bas
+  text('Score: ' + score + '/' + maxScore, width - width * 0.01, height - height * 0.01);
+
+
 
 
   // Si le jeu est terminé, afficher la pop-up, mais continuer à dessiner
@@ -217,7 +234,7 @@ function draw() {
 
   // Calculer le temps écoulé en secondes
   let elapsedTime = (millis() - startTime) / 1000;  // Convertir en secondes
-  if (elapsedTime >= 5) {
+  if (elapsedTime >= 20) {
     gameOver = true; // Fin du jeu
     showGameOverPopup(); // Afficher la fenêtre pop-up
   }
@@ -270,6 +287,7 @@ function mousePressed() {
       }, 0);
 
       // اضافه کردن یک ثانیه به زمان
+      score++; // Augmenter le score
       startTime += 1000;  // اضافه کردن 1 ثانیه
       selectRandomCountry();  // انتخاب کشور جدید
     }
@@ -379,6 +397,8 @@ function selectMode(selectedMode) {
 // Fonction pour redémarrer le jeu
 function restartGame() {
   // Réinitialiser le timer et le jeu
+  score = 0; // Réinitialiser le score
+
 
   startTime = millis();  // Réinitialiser le temps
   gameOver = false;  // Reprendre le jeu
