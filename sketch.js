@@ -8,7 +8,7 @@ var size = 0.7;
 let startTime;  // Pour stocker l'heure de départ
 let gameOver = false; // Variable pour vérifier si le jeu est terminé
 let hintUsageCount = 0; // Compteur pour suivre le nombre d'utilisations de l'indice
-const maxHints = 3; // Nombre maximum d'utilisations
+const maxHints = 100; // Nombre maximum d'utilisations du hint
 let popup;  // Variable pour stocker l'élément de la pop-up
 let restartButton; // Variable pour le bouton de redémarrage
 let targetCountry; // stocker le pays à deviner 
@@ -24,12 +24,18 @@ let startBgImg; // برای ذخیره تصویر بکگراند
 let score = 0; // Score initial
 let maxScore=0;
 let penaltyTime = 0;  // Temps supplémentaire ou soustrait (en millisecondes)
+let music; // Variable pour stocker la musique
 
 function preload() {
-  startBgImg = loadImage("worldd.jpg"); // مسیر تصویر بکگراند
+  startBgImg = loadImage("worldd.jpg");
+  music = loadSound('musique.mp3');
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  if (music.isLoaded()) {
+    music.setVolume(0.5); // Définir le volume (valeur entre 0 et 1)
+    music.loop(); // Faire en sorte que la musique joue en boucle
+  }
   popupMessage = createDiv().style('background-color', '#fff')
     .style('padding', '10px')
     .style('border-radius', '10px')
@@ -144,6 +150,10 @@ function setup() {
 }
 
 function draw() {
+      // Si la musique n'est pas en train de jouer, vous pouvez la lancer
+  if (!music.isPlaying()) {
+    music.play();
+  }
   if (!gameStarted) {
     background(startBgImg);
     return; // وقتی بازی شروع نشده باشد، نمایش نمی‌دهیم
@@ -278,7 +288,7 @@ function mousePressed() {
     if (guessedCountry.name !== targetCountry.name) {
       // اگر اشتباه حدس زده شود
       wrongGuesses++;
-      penaltyTime -= 1000;  // Retirer 1 seconde
+      penaltyTime += 1000;  // Ajouter une seconde
       showMessage = '-1: ' + guessedCountry.name;
 
       setTimeout(() => {
@@ -292,10 +302,11 @@ function mousePressed() {
         showPopup(showMessage);
         setTimeout(() => popupMessage.hide(), 1000);
       }, 0);
+        startTime = millis(); // Redémarrer le timer  lorque l'utilisateur trouve un pays 
 
       // اضافه کردن یک ثانیه به زمان
       score++; // Augmenter le score
-      penaltyTime += 1000;  // Ajouter 1 seconde
+      penaltyTime -= 1000;  // enlever une seconde car l'utilisateur à trouver le pays 
       selectRandomCountry();  // انتخاب کشور جدید
       if (score === maxScore) {
         gameOver = true;  // بازی تمام شده
@@ -391,12 +402,14 @@ function activateHint() {
   
     if (hintType === 0) {
       // Option 1: Ajouter trois pays, y compris le pays cible
-      hintCountries.push(targetCountry);
+      hintCountries.push(targetCountry);  // S'assurer que le pays cible est toujours inclus
   
+      // Ajouter des pays aléatoires jusqu'à atteindre 3 pays
       while (hintCountries.length < 3) {
-        let randomCountry = random(country);
+        let randomCountry = random(country);  // Sélectionner un pays au hasard
+        // Vérifier que le pays sélectionné n'est pas déjà dans la liste des pays à indiquer
         if (!hintCountries.includes(randomCountry)) {
-          hintCountries.push(randomCountry);
+          hintCountries.push(randomCountry); // Ajouter le pays si ce n'est pas déjà dans la liste
         }
       }
   
@@ -413,6 +426,7 @@ function activateHint() {
     // Incrémenter le compteur d'utilisation de l'indice
     hintUsageCount++;
   }
+  
   
   // Fonction pour afficher un message temporaire
   function showTemporaryMessage(message, duration) {
@@ -437,13 +451,13 @@ function activateHint() {
   
   
 
-// عملکرد انتخاب مود
+
 function selectMode(selectedMode) {
   mode = selectedMode;
-  modePopup.hide();  // مخفی کردن پنجره انتخاب مود
-  modeSelected = true;  // مود انتخاب شده است
-  startTime = millis();  // شروع تایمر بازی
-  gameOver = false;  // ریست کردن وضعیت پایان بازی
+  modePopup.hide();  
+  modeSelected = true; 
+  startTime = millis();  
+  gameOver = false;  
   // Désactiver le Hint lors du changement de mode
   hintActive = false;
   hintCountries = []; // Réinitialiser la liste des pays pour le Hint
