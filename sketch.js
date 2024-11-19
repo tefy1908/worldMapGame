@@ -25,7 +25,7 @@ function preload() {
   startBgImg = loadImage("worldd.jpg"); // مسیر تصویر بکگراند
 }
 function setup() {
-  createCanvas(1600, 1200);
+  createCanvas(windowWidth , windowHeight);
   popupMessage = createDiv().style('background-color', '#fff')
     .style('padding', '10px')
     .style('border-radius', '10px')
