@@ -441,13 +441,13 @@ function activateHint() {
   
   
 
-// عملکرد انتخاب مود
+
 function selectMode(selectedMode) {
   mode = selectedMode;
-  modePopup.hide();  // مخفی کردن پنجره انتخاب مود
-  modeSelected = true;  // مود انتخاب شده است
-  startTime = millis();  // شروع تایمر بازی
-  gameOver = false;  // ریست کردن وضعیت پایان بازی
+  modePopup.hide();  
+  modeSelected = true; 
+  startTime = millis();  
+  gameOver = false;  
   // Désactiver le Hint lors du changement de mode
   hintActive = false;
   hintCountries = []; // Réinitialiser la liste des pays pour le Hint
