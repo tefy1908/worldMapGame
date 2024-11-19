@@ -97,14 +97,18 @@ function setup() {
     startTime = millis();  // شروع مجدد تایمر
     gameOver = false;  // اطمینان از اینکه بازی در حالت تمام شده نیست
     if (mode === 'easy') {
-      // کارهایی که برای مود آسان می‌خواهید انجام دهید
-      maxScore = 10; // مقدار حداکثر امتیاز برای مود easy
+      maxScore = 1;
+    if(score===maxScore){
+      popup.show();
+    }  
+    
     } else if (mode === 'normal') {
       maxScore = 20; // مقدار حداکثر امتیاز برای مود easy
       //console.log('Normal mode selected!');
     } else if (mode === 'hard') {
       maxScore = 30; // مقدار حداکثر امتیاز برای مود easy
     }
+    
     // ریست کردن بازی به حالت اولیه
     //resetGame();
     selectRandomCountry();
@@ -293,6 +297,11 @@ function mousePressed() {
       score++; // Augmenter le score
       penaltyTime += 1000;  // Ajouter 1 seconde
       selectRandomCountry();  // انتخاب کشور جدید
+      if (score === maxScore) {
+        gameOver = true;  // بازی تمام شده
+        showGameOverPopup();  // نمایش پیام برنده شدن
+        
+      }
     }
   }
 }
@@ -313,6 +322,10 @@ function showPopup(message) {
 
 // Fonction pour afficher le message de fin du jeu
 function showGameOverPopup() {
+  let message = "Vous avez perdu"; // پیام پیش‌فرض
+  if (score === maxScore) {
+    message = "Vous avez gagné"; // پیام برنده
+  }
   // position pop up
   let popupWidth = 300;  // Largeur de la pop-up
   let popupHeight = 150;  // Hauteur de la pop-up
@@ -329,7 +342,7 @@ function showGameOverPopup() {
   popup.style('text-align', 'center');  // Centrer le texte
   popup.style('width', popupWidth + 'px');  // Largeur précise
   popup.style('height', popupHeight + 'px');  // Hauteur précise
-  popup.html('<p>Vous avez perdu ! </p>'); // Message "Vous avez perdu"
+  popup.html('<p>' + message + '</p>'); // Message "Vous avez perdu"
   // Style de conteneur pour les boutons
   let buttonContainer = createDiv();
   buttonContainer.parent(popup);
